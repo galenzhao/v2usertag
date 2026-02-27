@@ -1,0 +1,166 @@
+/* Premium Aesthetics for V2EX Tags */
+
+.v2user-tags-container {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: 8px;
+    vertical-align: middle;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    user-select: none;
+}
+
+.v2user-tag {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+    color: #3730a3;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 12px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.v2user-tag:hover {
+    background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+    color: #991b1b;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(220, 38, 38, 0.15);
+    border-color: #fca5a5;
+}
+
+/* The remove icon that appears on hover */
+.v2user-tag .tag-text {
+    transition: opacity 0.2s;
+}
+
+.v2user-tag .tag-remove {
+    position: absolute;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.2s;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.v2user-tag:hover .tag-text {
+    opacity: 0.1;
+}
+
+.v2user-tag:hover .tag-remove {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Add Tag Button */
+.v2user-tag-add {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background-color: #f1f5f9;
+    color: #94a3b8;
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px dashed #cbd5e1;
+    opacity: 0.4;
+}
+
+.v2user-tags-container:hover .v2user-tag-add,
+.v2user-tag-add:hover {
+    opacity: 1;
+}
+
+.v2user-tag-add:hover {
+    background-color: #e2e8f0;
+    color: #475569;
+    border-style: solid;
+    transform: rotate(90deg);
+}
+
+/* Inline Input form for adding tags */
+.v2user-tag-input-wrapper {
+    display: inline-flex;
+    align-items: center;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    padding: 0 4px 0 8px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    animation: slideIn 0.2s ease-out forwards;
+}
+
+.v2user-tag-input {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 11px;
+    width: 60px;
+    color: #334155;
+    transition: width 0.2s;
+}
+
+.v2user-tag-input:focus {
+    width: 90px;
+}
+
+.v2user-tag-input-confirm {
+    background: transparent;
+    border: none;
+    color: #10b981;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 2px 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+}
+
+.v2user-tag-input-confirm:hover {
+    background: #ecfdf5;
+}
+
+.v2user-tag-input-cancel {
+    background: transparent;
+    border: none;
+    color: #ef4444;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 2px 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+}
+
+.v2user-tag-input-cancel:hover {
+    background: #fef2f2;
+}
+
+.hidden {
+    display: none !important;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}

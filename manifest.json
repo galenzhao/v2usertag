@@ -1,0 +1,36 @@
+{
+  "manifest_version": 3,
+  "name": "V2EX User Tags",
+  "version": "1.0",
+  "description": "Add and sync custom user tags on V2EX with your GitHub repository.",
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "*://*.v2ex.com/*",
+    "https://api.github.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.v2ex.com/*"
+      ],
+      "css": [
+        "content/content.css"
+      ],
+      "js": [
+        "content/content.js"
+      ]
+    }
+  ],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "Configure V2EX Tags Integration"
+  },
+  "icons": {
+    "128": "icon128.png"
+  }
+}

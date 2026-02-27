@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>V2EX Tags - GitHub Sync Config</title>
+  <link rel="stylesheet" href="popup.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          class="lucide lucide-tag">
+          <path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2Z" />
+          <path d="M7 7h.01" />
+        </svg>
+        <h1>V2EX Tags Sync</h1>
+      </div>
+      <p class="subtitle">Sync your custom user tags across devices using GitHub.</p>
+    </header>
+
+    <!-- SECTION: AUTHENTICATION -->
+    <section id="auth-section" class="card active">
+      <h2>GitHub Connection</h2>
+      <p class="desc">We need a Fine-Grained Personal Access Token (PAT) with <code class="inline-code">repo</code>
+        permissions to sync your tags.</p>
+
+      <details class="help-details">
+        <summary>How to create a Token?</summary>
+        <div class="help-content">
+          <ol>
+            <li>Go to <a href="https://github.com/settings/tokens?type=beta" target="_blank">GitHub Tokens (beta)</a>.
+            </li>
+            <li>Click <strong>Generate new token</strong>.</li>
+            <li>Under <strong>Repository access</strong>, choose "Only select repositories" and pick your target repo.
+            </li>
+            <li>Under <strong>Permissions -> Repository permissions</strong>, find <strong>Contents</strong> and set it
+              to <strong>Read and write</strong>.</li>
+            <li>Scroll down and click <strong>Generate token</strong>.</li>
+            <li>Copy the token (starts with <code>github_pat_</code>) and paste it below.</li>
+          </ol>
+        </div>
+      </details>
+
+      <div class="input-group">
+        <label for="pat-input">Personal Access Token</label>
+        <input type="password" id="pat-input" placeholder="github_pat_xxxxxxxxxxxxx">
+      </div>
+
+      <button id="btn-verify-token" class="btn btn-primary">
+        <span class="btn-text">Connect to GitHub</span>
+        <div class="spinner hidden"></div>
+      </button>
+
+      <div id="auth-message" class="message hidden"></div>
+    </section>
+
+    <!-- SECTION: REPOSITORY SELECTION -->
+    <section id="repo-section" class="card hidden">
+      <div class="success-header">
+        <div class="success-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+            <polyline points="22 4 12 14.01 9 11.01" />
+          </svg>
+        </div>
+        <div>
+          <h2>Connected</h2>
+          <p class="desc" id="user-info">Logged in successfully.</p>
+        </div>
+      </div>
+
+      <div class="input-group mt-4">
+        <label for="repo-select">Select Storage Repository</label>
+        <select id="repo-select" disabled>
+          <option value="">Loading repositories...</option>
+        </select>
+        <p class="tip">We will save tags in a <code>v2ex_tags.json</code> file in this repository.</p>
+      </div>
+
+      <button id="btn-save-repo" class="btn btn-primary" disabled>
+        Save Configuration
+      </button>
+
+      <div class="footer-actions">
+        <button class="btn-link" id="btn-disconnect">Disconnect Account</button>
+      </div>
+    </section>
+
+    <!-- SECTION: READY -->
+    <section id="ready-section" class="card hidden">
+      <div class="status-ready">
+        <div class="ready-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
+            <path d="m9 12 2 2 4-4" />
+          </svg>
+        </div>
+        <h2>All Set!</h2>
+        <p class="desc">Your GitHub repository is linked.</p>
+      </div>
+
+      <div class="repo-details">
+        <span class="label">Syncing to:</span>
+        <span class="value" id="current-repo-name">username/repo</span>
+      </div>
+
+      <button class="btn btn-secondary w-full mt-4" id="btn-change-settings">
+        Change Settings
+      </button>
+    </section>
+
+  </div>
+  <script src="popup.js"></script>
+</body>
+
+</html>
