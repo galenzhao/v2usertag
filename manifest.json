@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "V2EX User Tags",
-  "version": "1.0",
+  "version": "1.1",
   "description": "Add and sync custom user tags on V2EX with your GitHub repository.",
   "permissions": [
     "storage"

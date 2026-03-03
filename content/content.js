@@ -16,23 +16,49 @@ function init() {
 }
 
 // 2. Traversal and element selection
-function processDOM() {
-    // Find all links that go to /member/*
-    const links = document.querySelectorAll('a[href^="/member/"]');
+// Page type detection:
+//   - Topic detail : URL matches /t/<id>  (e.g. /t/1194561)
+//   - Everything else is treated as a list page (home, /go/*, /recent, /changes, etc.)
+//     List processing only touches div.cell.item, which won't exist on unrelated pages.
+function isTopicDetailPage() {
+    return /^\/t\/\d+/.test(location.pathname);
+}
 
+function processLinks(links) {
     links.forEach(link => {
         const text = link.textContent.trim();
-        // Exclude avatars (which contain <img>) and empty links
-        if (text.length > 0 && !link.querySelector('img') && !link.dataset.v2tagsProcessed) {
+        if (text.length > 0 && !link.dataset.v2tagsProcessed) {
             link.dataset.v2tagsProcessed = "true";
-
             const username = link.getAttribute('href').replace('/member/', '');
-            if (username) {
-                injectTagContainer(link, username);
-            }
+            if (username) injectTagContainer(link, username);
         }
     });
 }
+
+function processDOM() {
+    if (isTopicDetailPage()) {
+        // Topic detail page – two locations:
+
+        // (A) Topic author: div.header > small.gray > a  (no <strong> wrapper)
+        document.querySelectorAll('div.header small.gray').forEach(small => {
+            processLinks(small.querySelectorAll('a[href^="/member/"]'));
+        });
+
+        // (B) Each reply: div[id^="r_"].cell > ... > strong > a
+        document.querySelectorAll('div[id^="r_"].cell').forEach(cell => {
+            processLinks(cell.querySelectorAll('strong a[href^="/member/"]'));
+        });
+
+    } else {
+        // All list pages (home, /go/*, /recent, /changes, node pages, etc.)
+        // Use span.topic_info as the anchor — it's consistent across all list page types,
+        // unlike the outer container class which can vary (e.g. "cell item" vs just "cell").
+        document.querySelectorAll('span.topic_info').forEach(infoSpan => {
+            processLinks(infoSpan.querySelectorAll('strong a[href^="/member/"]'));
+        });
+    }
+}
+
 
 // 3. Inject Tag UI Next to User Link
 function injectTagContainer(userLinkElement, username) {
